@@ -1,0 +1,21 @@
+sudo: required
+language: bash
+services:
+  - docker
+
+before_script:
+  - docker -v
+
+script:
+  - docker run -v $(pwd):/app -w /app -e CGO_ENABLED=0 golang:1.13-alpine go test
+  - docker build -t keboola-datastudio-processor .
+
+after_success:
+  - docker images
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ./deploy.sh
+  on:
+    tags: true
