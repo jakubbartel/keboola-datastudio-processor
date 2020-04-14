@@ -177,10 +177,6 @@ func EncodeCsv(r io.Reader, w io.Writer) error {
 		dataset.RowsNum = len(data) - 1
 	}
 
-	for _, col := range dataset.Columns {
-		fmt.Printf("Column %s encoded with %s encoder\n", col.Name, col.Encoding)
-	}
-
 	gw, _ := gzip.NewWriterLevel(w, gzip.DefaultCompression)
 
 	if err := json.NewEncoder(gw).Encode(dataset); err != nil {

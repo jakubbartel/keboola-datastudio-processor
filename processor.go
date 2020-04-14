@@ -75,6 +75,8 @@ func processDir(dirPath, outputDir string) error {
 		return fmt.Errorf("list inputs: %w", err)
 	}
 
+	fmt.Printf("Found %d files in \"%s\" to process\n", len(files), dirPath)
+
 	for _, file := range files {
 		if err := processFile(file, dirPath, outputDir); err != nil {
 			return fmt.Errorf("process file: %w", err)
