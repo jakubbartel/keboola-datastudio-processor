@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"os"
 	"strconv"
 )
 
@@ -105,6 +106,7 @@ func scoreColumn(col *Column) float64 {
 	jw := json.NewEncoder(gw)
 
 	if err := jw.Encode(col); err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "Cannot json encode column: %v", err)
 		panic("column json encode")
 	}
 
