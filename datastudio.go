@@ -106,8 +106,9 @@ func scoreColumn(col *Column) float64 {
 	jw := json.NewEncoder(gw)
 
 	if err := jw.Encode(col); err != nil {
+		// TODO: handle more systematically
 		_, _ = fmt.Fprintf(os.Stderr, "Cannot json encode column: %v", err)
-		panic("column json encode")
+		os.Exit(1)
 	}
 
 	_ = gw.Close()
