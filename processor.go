@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/jakubbartel/kbcdatastudioproc/keboola"
 )
@@ -39,6 +40,11 @@ func listInputs(dirPath string) ([]string, error) {
 }
 
 func processFile(path, inputDir, outputDir string) error {
+	t := time.Now()
+	defer func() {
+		fmt.Printf("File \"%s\" processed in %s\n", path, time.Since(t))
+	}()
+
 	r, err := os.Open(path)
 	if err != nil {
 		return fmt.Errorf("open input file: %w", err)
