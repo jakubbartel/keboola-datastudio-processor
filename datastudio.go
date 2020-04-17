@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"strconv"
 )
@@ -61,6 +62,8 @@ func encodeColumnNumber(data []string) (*Column, error) {
 		num, err := strconv.ParseFloat(str, 32)
 		if err != nil {
 			return nil, fmt.Errorf("column contains a non-numeric string: %v", err)
+		} else if math.IsInf(num, 0) {
+			return nil, fmt.Errorf("column contains infinity number: %v", err)
 		}
 
 		nums = append(nums, float32(num))
